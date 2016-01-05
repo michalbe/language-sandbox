@@ -66,7 +66,7 @@ var GAME = function() {
 		canvas.width = canvas.width;
 
 		// copy the tail of the snake
-		var elementToMove = Object.create(SNAKE.elements[0]);
+		var elementToMove = JSON.parse(JSON.stringify(SNAKE.elements[0]));
 		switch(SNAKE.direction) {
 			case 'right':
 				elementToMove.x++;
@@ -78,7 +78,7 @@ var GAME = function() {
 				elementToMove.y--;
 				break;
 			case 'down':
-				elementToMove++;
+				elementToMove.y++;
 				break;
 		};
 
@@ -91,6 +91,7 @@ var GAME = function() {
 			SNAKE.collidesWith(elementToMove)
 		) {
 			//restart game
+			alert("Game Over!\nScore: " + score);
 			init();
 			return;
 		}
