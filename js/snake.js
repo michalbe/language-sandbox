@@ -22,7 +22,6 @@ var GAME = function() {
 			this.elements = [];
 			var i = this.length;
 			while(i--) {
-				//This will create a horizontal snake starting from the top left
 				this.elements.push({x: i, y:0});
 			}
 		},
@@ -55,8 +54,6 @@ var GAME = function() {
 		FOOD.create();
 		score = 0;
 
-		//Lets move the snake now using a timer which will trigger the paint function
-		//every 60ms
 		clearInterval(gameLoop);
 		gameLoop = setInterval(render, 260);
 	}
@@ -66,7 +63,7 @@ var GAME = function() {
 		// clear the canvas
 		canvas.width = canvas.width;
 
-		// copy the tail of the snake
+		// copy the tail of the snake, this is the easiest way to do it in JS
 		var elementToMove = JSON.parse(JSON.stringify(SNAKE.elements[0]));
 		switch(SNAKE.direction) {
 			case 'right':
@@ -118,9 +115,7 @@ var GAME = function() {
 		ctx.fillText('SCORE: ' + score, 5, canvasHeight - 5);
 	}
 
-	//Lets first create a generic function to paint cells
 	function draw(element) {
-		//ctx.fillStyle = 'blue';
 		ctx.fillRect(
 			element.x * cellSize,
 			element.y * cellSize,
@@ -136,15 +131,12 @@ var GAME = function() {
 		);
 	}
 
-	//Lets add the keyboard controls now
 	document.addEventListener('keydown', function(e) {
 		var key = e.which;
-		//We will add another clause to prevent reverse gear
 		if(key === 37 && SNAKE.direction !== 'right') SNAKE.direction = 'left';
 		else if(key === 38 && SNAKE.direction !== 'down') SNAKE.direction = 'up';
 		else if(key === 39 && SNAKE.direction !== 'left') SNAKE.direction = 'right';
 		else if(key === 40 && SNAKE.direction !== 'up') SNAKE.direction = 'down';
-		//The snake is now keyboard controllable
 	});
 
 	init();
