@@ -58,7 +58,7 @@ var GAME = function() {
 		//Lets move the snake now using a timer which will trigger the paint function
 		//every 60ms
 		clearInterval(gameLoop);
-		gameLoop = setInterval(render, 60);
+		gameLoop = setInterval(render, 260);
 	}
 
 	//Lets paint the snake now
