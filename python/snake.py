@@ -1,3 +1,6 @@
+from sys import stdout
+from time import sleep
+
 def main():
     canvasWidth = 500;
     canvasHeight = 500;
@@ -6,7 +9,7 @@ def main():
     cellsY = int(round(canvasHeight/cellSize));
 
     for i in range(0, cellsX):
-        print '\n',
+        stdout.write('\n')
         for j in range(0, cellsY):
-            print '*',
+            stdout.write('*')
 main()
