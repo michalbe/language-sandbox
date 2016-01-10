@@ -1,5 +1,6 @@
 import pygame
 import sys
+import copy
 
 pygame.init()
 
@@ -34,6 +35,15 @@ class SNAKE:
         for element in snake.elements:
             draw(element)
 
+    def move(self):
+        elementToMove = copy.deepcopy(self.elements)
+        elementToMove = elementToMove[0]
+        if self.direction == 'right':
+            elementToMove['x'] = elementToMove.get('x') + 1
+
+        self.elements.pop()
+        self.elements.insert(0, elementToMove)
+
 def initGame():
     global snake
     snake = SNAKE()
@@ -46,6 +56,7 @@ def draw(element):
     pygame.draw.rect(screen, color, (element.get('x') * cellSize, element.get('y') * cellSize, cellSize, cellSize), 0)
 
 def render():
+    snake.move()
     snake.render()
 
 initGame()
