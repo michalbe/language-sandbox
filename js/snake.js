@@ -9,7 +9,8 @@ var GAME = function() {
 	var canvasWidth = canvas.width;
 	var canvasHeight = canvas.height;
 	var cellSize = 15;
-
+	var cellsX = Math.round(canvasWidth/cellSize);
+	var cellsY = Math.round(canvasHeight/cellSize);
 	var score;
 
 	var SNAKE = {
@@ -84,9 +85,9 @@ var GAME = function() {
 		// game over conditions
 		if(
 			elementToMove.x === -1 ||
-			elementToMove.x === canvasWidth/cellSize ||
+			elementToMove.x === cellsX ||
 			elementToMove.y === -1 ||
-			elementToMove.y === canvasHeight/cellSize ||
+			elementToMove.y === cellsY ||
 			SNAKE.collidesWith(elementToMove)
 		) {
 			//restart game
@@ -137,10 +138,10 @@ var GAME = function() {
 	document.addEventListener('keydown', function(e) {
 		var key = e.which;
 		//We will add another clause to prevent reverse gear
-		if(key === '37' && SNAKE.direction !== 'right') SNAKE.direction = 'left';
-		else if(key === '38' && SNAKE.direction !== 'down') SNAKE.direction = 'up';
-		else if(key === '39' && SNAKE.direction !== 'left') SNAKE.direction = 'right';
-		else if(key === '40' && SNAKE.direction !== 'up') SNAKE.direction = 'down';
+		if(key === 37 && SNAKE.direction !== 'right') SNAKE.direction = 'left';
+		else if(key === 38 && SNAKE.direction !== 'down') SNAKE.direction = 'up';
+		else if(key === 39 && SNAKE.direction !== 'left') SNAKE.direction = 'right';
+		else if(key === 40 && SNAKE.direction !== 'up') SNAKE.direction = 'down';
 		//The snake is now keyboard controllable
 	});
 
