@@ -7,3 +7,4 @@
 ## about the lang
   - no `++`
   - no extra methods or attributes like `length`
+  - get dict values with .get(), not dict.value or dict['value']
