@@ -10,6 +10,7 @@ screen = pygame.display.set_mode((width, height))
 cellSize = 15;
 cellsX = round(width/cellSize);
 cellsY = round(height/cellSize);
+snake = None
 
 # set default drawing colors
 color = (0,0,0)
@@ -29,12 +30,23 @@ class SNAKE:
             self.elements.append({'x': i, 'y':0})
             i -= 1
 
+    def render(self):
+        for element in snake.elements:
+            draw(element)
+
 def initGame():
+    global snake
     snake = SNAKE()
     snake.direction = 'right'
     snake.create()
     score = 0
 
+
+def draw(element):
+    pygame.draw.rect(screen, color, (element.get('x') * cellSize, element.get('y') * cellSize, cellSize, cellSize), 0)
+
+def render():
+    snake.render()
 
 initGame()
 
@@ -48,5 +60,5 @@ while (True):
     screen.fill(bgColor);
 
     #draw single rectangle
-    pygame.draw.rect(screen, color, (0, 0, cellSize, cellSize), 0)
+    render()
     pygame.display.update()
