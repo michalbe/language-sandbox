@@ -12,6 +12,7 @@ var GAME = function() {
 	var cellsX = Math.round(canvasWidth/cellSize);
 	var cellsY = Math.round(canvasHeight/cellSize);
 	var score;
+	var gameLoop;
 
 	var SNAKE = {
 		elements: [],
@@ -56,8 +57,8 @@ var GAME = function() {
 
 		//Lets move the snake now using a timer which will trigger the paint function
 		//every 60ms
-		if(typeof game_loop != 'undefined') clearInterval(game_loop);
-		game_loop = setInterval(render, 60);
+		clearInterval(gameLoop);
+		gameLoop = setInterval(render, 60);
 	}
 
 	//Lets paint the snake now
