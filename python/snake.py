@@ -3,10 +3,13 @@ import sys
 
 pygame.init()
 
-#setup the screen
-screen = pygame.display.set_mode((500, 500))
-
-print pygame.version.ver
+# Configuration
+width = 500
+height = 500
+screen = pygame.display.set_mode((width, height))
+cellSize = 15;
+cellsX = round(width/cellSize);
+cellsY = round(height/cellSize);
 
 # set default drawing colors
 color = (0,0,0)
@@ -22,5 +25,5 @@ while (True):
     screen.fill(bgColor);
 
     #draw single rectangle
-    pygame.draw.rect(screen, color, (0,0,15,15), 0)
+    pygame.draw.rect(screen, color, (0, 0, cellSize, cellSize), 0)
     pygame.display.update()
