@@ -11,3 +11,5 @@
   - global keyword to modify global scope
   - no switch statement (wow)
   - pop can return every element of the array
+  - non intuitive `elif` instead of `else if` or `elseif`
+  - waaaay nicer random functions than JS
