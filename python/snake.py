@@ -51,7 +51,10 @@ class SNAKE:
         elif self.direction == 'up':
             elementToMove['y'] = elementToMove['y'] - 1
 
-        if elementToMove['x'] == -1 or elementToMove['x'] == cellsX or elementToMove['y'] == -1 or elementToMove['y'] == cellsY:
+        if (elementToMove['x'] == -1 or
+            elementToMove['x'] == cellsX or
+            elementToMove['y'] == -1 or
+            elementToMove['y'] == cellsY):
 			# restart game
 			gameloop = False
 
@@ -63,7 +66,10 @@ class FOOD:
         self.position = None
 
     def create(self):
-        self.position = {'x': random.randrange(0, (width - cellSize)/cellSize, 1), 'y': random.randrange(0, (height - cellSize)/cellSize, 1)}
+        self.position = {
+            'x': random.randrange(0, (width - cellSize)/cellSize, 1),
+            'y': random.randrange(0, (height - cellSize)/cellSize, 1)
+        }
 
     def render(self):
         draw(self.position)
@@ -79,7 +85,17 @@ def initGame():
 
 
 def draw(element):
-    pygame.draw.rect(screen, color, (element.get('x') * cellSize, element.get('y') * cellSize, cellSize, cellSize), 0)
+    pygame.draw.rect(
+        screen,
+        color,
+        (
+            element['x'] * cellSize,
+            element['y'] * cellSize,
+            cellSize,
+            cellSize
+        ),
+        0
+    )
 
 def render():
     snake.move()
