@@ -12,6 +12,7 @@ cellSize = 15;
 cellsX = round(width/cellSize);
 cellsY = round(height/cellSize);
 snake = None
+gameloop = True
 
 # set default drawing colors
 color = (0,0,0)
@@ -36,10 +37,21 @@ class SNAKE:
             draw(element)
 
     def move(self):
+        global gameloop
         elementToMove = copy.deepcopy(self.elements)
         elementToMove = elementToMove[0]
         if self.direction == 'right':
-            elementToMove['x'] = elementToMove.get('x') + 1
+            elementToMove['x'] = elementToMove['x'] + 1
+        elif self.direction == 'left':
+            elementToMove['x'] = elementToMove['x'] - 1
+        elif self.direction == 'down':
+            elementToMove['y'] = elementToMove['y'] + 1
+        elif self.direction == 'up':
+            elementToMove['y'] = elementToMove['y'] - 1
+
+        if elementToMove['x'] == -1 or elementToMove['x'] == cellsX or elementToMove['y'] == -1 or elementToMove['y'] == cellsY:
+			# restart game
+			gameloop = False
 
         self.elements.pop()
         self.elements.insert(0, elementToMove)
@@ -71,5 +83,6 @@ while (True):
     screen.fill(bgColor);
 
     #draw single rectangle
-    render()
-    pygame.display.update()
+    if gameloop:
+        render()
+        pygame.display.update()
