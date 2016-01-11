@@ -15,7 +15,30 @@ cellsY = round(height/cellSize);
 color = (0,0,0)
 bgColor = (255,255,255)
 
-#main game loop
+
+class SNAKE:
+    def __init__(self):
+        self.elements = []
+        self.direction = 'right'
+        self.length = 5
+
+    def create(self):
+        self.elements = []
+        i = self.length
+        while i != 0:
+            self.elements.append({'x': i, 'y':0})
+            i -= 1
+
+def initGame():
+    snake = SNAKE()
+    snake.direction = 'right'
+    snake.create()
+    score = 0
+
+
+initGame()
+
+# main game loop
 while (True):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
