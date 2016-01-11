@@ -1,6 +1,7 @@
 import pygame
 import sys
 import copy
+import random
 
 pygame.init()
 
@@ -12,6 +13,7 @@ cellSize = 15;
 cellsX = round(width/cellSize);
 cellsY = round(height/cellSize);
 snake = None
+food = None
 gameloop = True
 
 # set default drawing colors
@@ -56,11 +58,23 @@ class SNAKE:
         self.elements.pop()
         self.elements.insert(0, elementToMove)
 
+class FOOD:
+    def __init__(self):
+        self.position = None
+
+    def create(self):
+        self.position = {'x': random.randrange(0, (width - cellSize)/cellSize, 1), 'y': random.randrange(0, (height - cellSize)/cellSize, 1)}
+
+    def render(self):
+        draw(self.position)
+
 def initGame():
-    global snake
+    global snake, food
     snake = SNAKE()
     snake.direction = 'right'
     snake.create()
+    food = FOOD()
+    food.create()
     score = 0
 
 
@@ -70,6 +84,7 @@ def draw(element):
 def render():
     snake.move()
     snake.render()
+    food.render()
 
 initGame()
 
