@@ -4,7 +4,7 @@ import copy
 import random
 
 pygame.init()
-
+font = pygame.font.SysFont("monospace", 15)
 # Configuration
 width = 500
 height = 500
@@ -34,6 +34,7 @@ class SNAKE:
         while i != 0:
             self.elements.append({'x': i, 'y':0})
             i -= 1
+
     def collidesWith(self, otherElement):
 			for element in self.elements:
 				if (element['x'] == otherElement['x'] and
@@ -46,7 +47,7 @@ class SNAKE:
             draw(element)
 
     def move(self):
-        global gameloop
+        global gameloop, food, score
         elementToMove = copy.deepcopy(self.elements)
         elementToMove = elementToMove[0]
         if self.direction == 'right':
@@ -66,7 +67,12 @@ class SNAKE:
 			# restart game
 			gameloop = False
 
-        self.elements.pop()
+        if self.collidesWith(food.position):
+            score += 1
+            food.create()
+        else:
+            self.elements.pop()
+
         self.elements.insert(0, elementToMove)
 
 class FOOD:
@@ -83,7 +89,7 @@ class FOOD:
         draw(self.position)
 
 def initGame():
-    global snake, food
+    global snake, food, score
     snake = SNAKE()
     snake.direction = 'right'
     snake.create()
@@ -133,5 +139,7 @@ while (True):
     #draw single rectangle
     if gameloop:
         render()
+        label = font.render("Score " + str(score), 1, color)
+        screen.blit(label, (10, height - 30))
         pygame.display.update()
         pygame.time.wait(1000/fps)
