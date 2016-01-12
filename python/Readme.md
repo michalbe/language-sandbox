@@ -9,7 +9,7 @@
 ## How it looks like?
   ![screen.png](screen.png)
 
-## Notes about the language
+## Notes on the language
   - No `++` & `--` operators, just `+=1`, `-=1`
   - No extra attributes like `length` on lists - list length with `len(list)`
   - Get dict values with `.get('value')` `or dict['value']`, not `dict.value`
