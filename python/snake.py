@@ -124,6 +124,10 @@ while (True):
         if event.type == pygame.QUIT:
             pygame.quit(); sys.exit();
         if event.type == pygame.KEYDOWN:
+            if not gameloop:
+                score = 0
+                initGame()
+                gameloop = True
             if event.key == pygame.K_LEFT and snake.direction != 'right':
                 snake.direction = 'left'
             if event.key == pygame.K_RIGHT and snake.direction != 'left':
