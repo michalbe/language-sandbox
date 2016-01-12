@@ -15,6 +15,7 @@ cellsY = round(height/cellSize);
 snake = None
 food = None
 gameloop = True
+fps = 20
 
 # set default drawing colors
 color = (0,0,0)
@@ -33,9 +34,15 @@ class SNAKE:
         while i != 0:
             self.elements.append({'x': i, 'y':0})
             i -= 1
+    def collidesWith(self, otherElement):
+			for element in self.elements:
+				if (element['x'] == otherElement['x'] and
+					element['y'] == otherElement['y']):
+					return True
+			return False;
 
     def render(self):
-        for element in snake.elements:
+        for element in self.elements:
             draw(element)
 
     def move(self):
@@ -54,7 +61,8 @@ class SNAKE:
         if (elementToMove['x'] == -1 or
             elementToMove['x'] == cellsX or
             elementToMove['y'] == -1 or
-            elementToMove['y'] == cellsY):
+            elementToMove['y'] == cellsY or
+            self.collidesWith(elementToMove)):
 			# restart game
 			gameloop = False
 
@@ -118,6 +126,7 @@ while (True):
                 snake.direction = 'down'
             if event.key == pygame.K_UP and snake.direction != 'down':
                 snake.direction = 'up'
+
     # fill screen with default background color
     screen.fill(bgColor);
 
@@ -125,3 +134,4 @@ while (True):
     if gameloop:
         render()
         pygame.display.update()
+        pygame.time.wait(1000/fps)
