@@ -110,13 +110,13 @@ while (True):
         if event.type == pygame.QUIT:
             pygame.quit(); sys.exit();
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_LEFT:
+            if event.key == pygame.K_LEFT and snake.direction != 'right':
                 snake.direction = 'left'
-            if event.key == pygame.K_RIGHT:
+            if event.key == pygame.K_RIGHT and snake.direction != 'left':
                 snake.direction = 'right'
-            if event.key == pygame.K_DOWN:
+            if event.key == pygame.K_DOWN and snake.direction != 'up':
                 snake.direction = 'down'
-            if event.key == pygame.K_UP:
+            if event.key == pygame.K_UP and snake.direction != 'down':
                 snake.direction = 'up'
     # fill screen with default background color
     screen.fill(bgColor);
