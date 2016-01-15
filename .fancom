@@ -26,7 +26,7 @@ emoji=1
 #addall=1
 
 # Prefix added to the commit message, default: [REPONAME]
-prefix="JS"
+prefix="PAS"
 
 # Add branch name to the prefix of the commit, default: no
 #branchincommit=1
