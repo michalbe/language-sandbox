@@ -32,6 +32,7 @@ int main(int argc, char *argv[]) {
 
   // draw the board here
   drawBoard();
+  createSnake(&snake);
 
   refresh();
   sleep(1);
@@ -40,7 +41,10 @@ int main(int argc, char *argv[]) {
 
 void createSnake(struct Snake *snake) {
   int i = snake->length;
-
+  while (i--) {
+    snake->elements[i].x = i;
+    snake->elements[i].y = 0;
+  }
 }
 
 void drawBoard() {
