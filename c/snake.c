@@ -18,8 +18,10 @@ struct Snake {
    struct Point  elements[100];
 };
 
+void createSnake(struct Snake *snake);
+void drawBoard();
+
 int main(int argc, char *argv[]) {
-  int i = 0, j = 0;
   struct Snake snake;
 
   // ncurses init stuff
@@ -29,6 +31,20 @@ int main(int argc, char *argv[]) {
   clear();
 
   // draw the board here
+  drawBoard();
+
+  refresh();
+  sleep(1);
+  endwin();
+}
+
+void createSnake(struct Snake *snake) {
+  int i = snake->length;
+
+}
+
+void drawBoard() {
+  int i = 0, j = 0;
   for (i=0; i < WIDTH; i++) {
     for (j=0; j < HEIGHT; j++) {
       if (
@@ -38,8 +54,4 @@ int main(int argc, char *argv[]) {
       }
     }
   }
-
-  refresh();
-  sleep(1);
-  endwin();
 }
