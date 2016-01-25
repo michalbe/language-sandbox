@@ -6,6 +6,10 @@
 // Game config
 #define WIDTH 40
 #define HEIGHT 20
+#define PIXEL "#"
+
+#define INITIAL_SNAKE_LENGTH 5;
+#define INITIAL_SNAKE_MARGIN 2;
 
 struct Point {
   int x;
@@ -19,6 +23,8 @@ struct Snake {
 };
 
 void createSnake(struct Snake *snake);
+void drawSnake(struct Snake *snake);
+void draw(struct Point *point);
 void drawBoard();
 
 int main(int argc, char *argv[]) {
@@ -32,7 +38,10 @@ int main(int argc, char *argv[]) {
 
   // draw the board here
   drawBoard();
+
+  snake.length = INITIAL_SNAKE_LENGTH;
   createSnake(&snake);
+  drawSnake(&snake);
 
   refresh();
   sleep(1);
@@ -40,21 +49,33 @@ int main(int argc, char *argv[]) {
 }
 
 void createSnake(struct Snake *snake) {
-  int i = snake->length;
-  while (i--) {
+  int i = snake->length + INITIAL_SNAKE_MARGIN;
+  while (i > INITIAL_SNAKE_MARGIN ) {
     snake->elements[i].x = i;
-    snake->elements[i].y = 0;
+    snake->elements[i].y = 2;
+    i--;
   }
 }
 
+void drawSnake(struct Snake *snake) {
+  for (int i=0; i < snake->length; i++) {
+    draw(&snake->elements[i]);
+  }
+}
+void draw(struct Point *point) {
+  mvprintw(point->y, point->x, PIXEL);
+}
+
 void drawBoard() {
-  int i = 0, j = 0;
+  int i = 0;
+  int j = 0;
+
   for (i=0; i < WIDTH; i++) {
     for (j=0; j < HEIGHT; j++) {
       if (
         (j == 0 | j == HEIGHT - 1) |
         (i == 0 | i == WIDTH - 1)) {
-        mvprintw(j, i, "#");
+        mvprintw(j, i, PIXEL);
       }
     }
   }
