@@ -1,0 +1,3 @@
+LDFLAGS=-lncurses
+
+all: snake
