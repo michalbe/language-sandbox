@@ -1,3 +1,4 @@
 # languages
 
-  - JS
+  - [JavaScript](tree/master/js)
+  - [Python](tree/master/python)
