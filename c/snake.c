@@ -8,8 +8,8 @@
 #define HEIGHT 20
 #define PIXEL "#"
 
-#define INITIAL_SNAKE_LENGTH 5;
-#define INITIAL_SNAKE_MARGIN 2;
+#define INITIAL_SNAKE_LENGTH 5
+#define INITIAL_SNAKE_MARGIN 2
 
 struct Point {
   int x;
@@ -44,16 +44,15 @@ int main(int argc, char *argv[]) {
   drawSnake(&snake);
 
   refresh();
-  sleep(1);
+  sleep(20);
   endwin();
 }
 
 void createSnake(struct Snake *snake) {
-  int i = snake->length + INITIAL_SNAKE_MARGIN;
-  while (i > INITIAL_SNAKE_MARGIN ) {
-    snake->elements[i].x = i;
-    snake->elements[i].y = 2;
-    i--;
+  int length = snake->length;
+  for (int i = 0; i < length; i++) {
+    snake->elements[i].x = i + INITIAL_SNAKE_MARGIN;
+    snake->elements[i].y = INITIAL_SNAKE_MARGIN;
   }
 }
 
