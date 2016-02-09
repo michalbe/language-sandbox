@@ -29,7 +29,7 @@ void drawBoard();
 
 int main(int argc, char *argv[]) {
   struct Snake snake;
-
+  int c;
   // ncurses init stuff
   initscr();
   noecho();
@@ -44,7 +44,24 @@ int main(int argc, char *argv[]) {
   drawSnake(&snake);
 
   refresh();
-  sleep(20);
+  while(1) {
+    c = getch();
+    mvprintw(5, 5, "%d", c);
+		switch(c) {
+      case 65: //UP
+				mvprintw(5, 5, "UP");
+				break;
+			case 66: // DOWN
+				mvprintw(5, 5, "DW");
+				break;
+      case 68: // LEFT
+				mvprintw(5, 5, "LF");
+				break;
+      case 67: // RIGHT
+				mvprintw(5, 5, "RG");
+				break;
+		}
+	}
   endwin();
 }
 
