@@ -26,6 +26,7 @@ void createSnake(struct Snake *snake);
 void drawSnake(struct Snake *snake);
 void draw(struct Point *point);
 void drawBoard();
+void redrawAll(struct Snake *snake);
 
 int main(int argc, char *argv[]) {
   struct Snake snake;
@@ -34,16 +35,11 @@ int main(int argc, char *argv[]) {
   initscr();
   noecho();
   curs_set(FALSE);
-  clear();
-
-  // draw the board here
-  drawBoard();
 
   snake.length = INITIAL_SNAKE_LENGTH;
   createSnake(&snake);
-  drawSnake(&snake);
 
-  refresh();
+  redrawAll(&snake);
   while(1) {
     c = getch();
     mvprintw(5, 5, "%d", c);
@@ -78,8 +74,16 @@ void drawSnake(struct Snake *snake) {
     draw(&snake->elements[i]);
   }
 }
+
 void draw(struct Point *point) {
   mvprintw(point->y, point->x, PIXEL);
+}
+
+void redrawAll(struct Snake *snake) {
+  clear();
+  drawBoard();
+  drawSnake(snake);
+  refresh();
 }
 
 void drawBoard() {
