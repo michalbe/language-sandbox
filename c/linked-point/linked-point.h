@@ -13,3 +13,7 @@ int shift(struct Point **head, int *x, int *y);
 void unshift(struct Point** head, int x, int y);
 
 #endif
+
+#ifndef NULL
+#define NULL 0
+#endif
