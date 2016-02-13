@@ -1,3 +1,2 @@
-LDFLAGS=-lncurses
-
-all: snake
+all:
+	gcc snake.c linked-point/linked-point.c -o snake -lncurses
