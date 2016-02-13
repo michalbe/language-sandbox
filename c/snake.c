@@ -104,7 +104,7 @@ void createSnake(struct Snake *snake) {
 void drawSnake(struct Snake *snake) {
   struct Point *current = snake->elements;
 
-  while(current->next != NULL) {
+  while(current != NULL) {
     draw(current);
     current = current->next;
   }
