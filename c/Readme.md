@@ -13,3 +13,4 @@ $ make %% ./snake
 ## Notes on the language
  - dummy macros (;)
  - pointers
+ - switch only on int

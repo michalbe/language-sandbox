@@ -12,16 +12,24 @@
 #define INITIAL_SNAKE_LENGTH 5
 #define INITIAL_SNAKE_MARGIN 2
 
+typedef enum {
+  up,
+  right,
+  left,
+  down
+} directions;
+
 struct Point {
   int x;
   int y;
 };
 
 struct Snake {
-   char          direction[10];
+   directions    direction;
    int           length;
    struct Point  elements[100];
 };
+
 
 void createSnake(struct Snake *snake);
 void drawSnake(struct Snake *snake);
@@ -40,27 +48,45 @@ int main(int argc, char *argv[]) {
   snake.length = INITIAL_SNAKE_LENGTH;
   createSnake(&snake);
 
+  struct Point elementToMove = snake.elements[0];
+
+  elementToMove.x = 8;
+  elementToMove.y = 8;
   while(1) {
     // main loop starts here
     redrawAll(&snake);
 
-    struct Point elementToMove = snake.elements[0];
-    c = getch();
-    mvprintw(5, 5, "%d", c);
-		switch(c) {
-      case 65: //UP
-				mvprintw(5, 5, "UP");
+    switch(snake.direction) {
+      case up:
+        elementToMove.y--;
 				break;
-			case 66: // DOWN
-				mvprintw(5, 5, "DW");
+			case down:
+        elementToMove.y++;
 				break;
-      case 68: // LEFT
-				mvprintw(5, 5, "LF");
+      case left:
+        elementToMove.x--;
 				break;
-      case 67: // RIGHT
-				mvprintw(5, 5, "RG");
+      case right:
+        elementToMove.x++;
 				break;
-		}
+    }
+
+    // c = getch();
+    // mvprintw(5, 5, "%d", c);
+		// switch(c) {
+    //   case 65: //UP
+		// 		mvprintw(5, 5, "UP");
+		// 		break;
+		// 	case 66: // DOWN
+		// 		mvprintw(5, 5, "DW");
+		// 		break;
+    //   case 68: // LEFT
+		// 		mvprintw(5, 5, "LF");
+		// 		break;
+    //   case 67: // RIGHT
+		// 		mvprintw(5, 5, "RG");
+		// 		break;
+		// }
 
     sleep(1/60);
 	}
@@ -74,7 +100,8 @@ void createSnake(struct Snake *snake) {
     snake->elements[i].x = i + INITIAL_SNAKE_MARGIN;
     snake->elements[i].y = INITIAL_SNAKE_MARGIN;
   }
-  strcpy(snake->direction, "right");
+
+  snake->direction = right;
 }
 
 void drawSnake(struct Snake *snake) {
