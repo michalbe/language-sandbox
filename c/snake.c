@@ -1,5 +1,6 @@
 #include <ncurses.h>
 #include <unistd.h>
+#include <string.h>
 
 #define DELAY 30000
 
@@ -39,8 +40,11 @@ int main(int argc, char *argv[]) {
   snake.length = INITIAL_SNAKE_LENGTH;
   createSnake(&snake);
 
-  redrawAll(&snake);
   while(1) {
+    // main loop starts here
+    redrawAll(&snake);
+
+    struct Point elementToMove = snake.elements[0];
     c = getch();
     mvprintw(5, 5, "%d", c);
 		switch(c) {
@@ -57,7 +61,10 @@ int main(int argc, char *argv[]) {
 				mvprintw(5, 5, "RG");
 				break;
 		}
+
+    sleep(1/60);
 	}
+
   endwin();
 }
 
@@ -67,6 +74,7 @@ void createSnake(struct Snake *snake) {
     snake->elements[i].x = i + INITIAL_SNAKE_MARGIN;
     snake->elements[i].y = INITIAL_SNAKE_MARGIN;
   }
+  strcpy(snake->direction, "right");
 }
 
 void drawSnake(struct Snake *snake) {
