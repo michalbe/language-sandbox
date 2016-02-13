@@ -14,3 +14,4 @@ $ make %% ./snake
  - dummy macros (;)
  - pointers
  - switch only on int
+ - no array methods like `.pop`, `.shift`, etc.
