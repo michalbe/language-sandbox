@@ -2,6 +2,8 @@
 #include <unistd.h>
 #include <string.h>
 
+#include "linked-point/linked-point.h"
+
 #define DELAY 30000
 
 // Game config
@@ -19,15 +21,10 @@ typedef enum {
   down
 } directions;
 
-struct Point {
-  int x;
-  int y;
-};
-
 struct Snake {
    directions    direction;
    int           length;
-   struct Point  elements[100];
+   struct Point  *elements;
 };
 
 
@@ -95,18 +92,21 @@ int main(int argc, char *argv[]) {
 }
 
 void createSnake(struct Snake *snake) {
+  snake->elements = NULL;
+  snake->direction = right;
+
   int length = snake->length;
   for (int i = 0; i < length; i++) {
-    snake->elements[i].x = i + INITIAL_SNAKE_MARGIN;
-    snake->elements[i].y = INITIAL_SNAKE_MARGIN;
+    push(&snake->elements, i + INITIAL_SNAKE_MARGIN, INITIAL_SNAKE_MARGIN);
   }
-
-  snake->direction = right;
 }
 
 void drawSnake(struct Snake *snake) {
-  for (int i=0; i < snake->length; i++) {
-    draw(&snake->elements[i]);
+  struct Point *current = snake->elements;
+
+  while(current->next != NULL) {
+    draw(current);
+    current = current->next;
   }
 }
 
