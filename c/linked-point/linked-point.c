@@ -1,4 +1,8 @@
+#include <stdlib.h>
 #include "linked-point.h"
+
+// This was taken and modified from here:
+// http://www.4pmp.com/2009/10/linked-lists-in-c-push-pop-shift-and-unshift/
 
 void push(struct Point **item, int x, int y){
     struct Point *current;
@@ -34,7 +38,7 @@ void push(struct Point **item, int x, int y){
         else
         {
             /* This is not the last item, recurse to the next one */
-            return push(¤t->next, x, y);
+            return push(&current->next, x, y);
         }
     }
 
@@ -82,7 +86,7 @@ int pop (struct Point **item, int *x, int *y)
             }
 
             /* Move on to the next item */
-            return pop(¤t->next, x, y);
+            return pop(&current->next, x, y);
         }
 
         /* There aren't any more items, this is the last one and therefore also the first */
