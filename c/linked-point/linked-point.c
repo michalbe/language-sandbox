@@ -58,7 +58,7 @@ void push(struct Point **item, int x, int y){
     *item = endItem;
 }
 
-int pop (struct Point **item, int *x, int *y)
+int pop(struct Point **item, int *x, int *y)
 {
     struct Point *current;
 
@@ -150,4 +150,43 @@ void unshift(struct Point** head, int x, int y)
 
     /* Set the pointer to the first item to this new item */
     *head = newPoint;
+}
+
+int last(struct Point **item, int *x, int *y)
+{
+    struct Point *current;
+
+    current = *item;
+
+    if (current)
+    {
+        /* See if the current item specifies a proceding item */
+        if (current->next)
+        {
+            /* There is a next item, so see if it is the last one */
+            if (current->next->next == NULL)
+            {
+                /* The next item is the last one, so get its value */
+                *x = current->next->x;
+                *y = current->next->y;
+
+                return 0;
+            }
+
+            /* Move on to the next item */
+            return last(&current->next, x, y);
+        }
+
+        /* There aren't any more items, this is the last one and therefore also the first */
+        *x = current->next->x;
+        *y = current->next->y;
+
+        return 0;
+    }
+
+    /* There are no items in the list */
+    x = NULL;
+    y = NULL;
+
+    return -1;
 }
