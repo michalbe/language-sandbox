@@ -34,9 +34,10 @@ void draw(struct Point *point);
 void drawBoard();
 void redrawAll(struct Snake *snake);
 
+int frame = 0;
 int main(int argc, char *argv[]) {
   struct Snake snake;
-  int c;
+  int c, x, y;
   // ncurses init stuff
   initscr();
   noecho();
@@ -45,28 +46,29 @@ int main(int argc, char *argv[]) {
   snake.length = INITIAL_SNAKE_LENGTH;
   createSnake(&snake);
 
-  struct Point elementToMove = snake.elements[0];
-
-  elementToMove.x = 8;
-  elementToMove.y = 8;
   while(1) {
+    last(&snake.elements, &x, &y);
+
     // main loop starts here
     redrawAll(&snake);
 
     switch(snake.direction) {
       case up:
-        elementToMove.y--;
+        y--;
 				break;
 			case down:
-        elementToMove.y++;
+        y++;
 				break;
       case left:
-        elementToMove.x--;
+        x--;
 				break;
       case right:
-        elementToMove.x++;
+        x++;
 				break;
     }
+
+
+    push(&snake.elements, x, y);
 
     // c = getch();
     // mvprintw(5, 5, "%d", c);
@@ -85,7 +87,7 @@ int main(int argc, char *argv[]) {
 		// 		break;
 		// }
 
-    sleep(1/60);
+    sleep(1);
 	}
 
   endwin();
@@ -103,7 +105,7 @@ void createSnake(struct Snake *snake) {
 
 void drawSnake(struct Snake *snake) {
   struct Point *current = snake->elements;
-
+  int iters = 0;
   while(current != NULL) {
     draw(current);
     current = current->next;
@@ -118,7 +120,10 @@ void redrawAll(struct Snake *snake) {
   clear();
   drawBoard();
   drawSnake(snake);
+  mvprintw(20, 3, "%d", frame);
   refresh();
+
+  frame++;
 }
 
 void drawBoard() {
