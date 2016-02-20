@@ -104,9 +104,9 @@ int main(int argc, char *argv[]) {
 
       // Game over conditions
       if (
-  			x == -1 ||
+  			x == 0 ||
   			x == WIDTH ||
-  			y == -1 ||
+  			y == 0 ||
   			y == HEIGHT ||
         collides(snake.elements, x, y)
   		) {
@@ -118,9 +118,15 @@ int main(int argc, char *argv[]) {
       // add the new elements with modified coords based on the last one
       push(&snake.elements, x, y);
 
-      // remove the first element
-      shift(&snake.elements, &x, &y);
-
+      if(
+  			x == food.x &&
+  			y == food.y
+  		) {
+  			createFood(&food);
+  		} else {
+        // remove the first element
+        shift(&snake.elements, &x, &y);
+      }
       redrawAll(&snake, &food);
       usleep(DELAY);
     }
