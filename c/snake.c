@@ -47,6 +47,7 @@ int main(int argc, char *argv[]) {
   createSnake(&snake);
 
   while(1) {
+    // get the last points coords
     last(&snake.elements, &x, &y);
 
     // main loop starts here
@@ -67,8 +68,11 @@ int main(int argc, char *argv[]) {
 				break;
     }
 
-
+    // add the new elements with modified coords based on the last one
     push(&snake.elements, x, y);
+
+    // remove the first element
+    shift(&snake.elements, &x, &y);
 
     // c = getch();
     // mvprintw(5, 5, "%d", c);
