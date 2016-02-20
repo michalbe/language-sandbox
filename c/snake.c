@@ -34,6 +34,7 @@ void draw(struct Point *point);
 void drawBoard();
 void redrawAll(struct Snake *snake);
 int readInput(void);
+int collides(struct Point *snake, int x, int y);
 
 int frame = 0;
 int main(int argc, char *argv[]) {
@@ -94,7 +95,8 @@ int main(int argc, char *argv[]) {
   			x == -1 ||
   			x == WIDTH ||
   			y == -1 ||
-  			y == HEIGHT
+  			y == HEIGHT ||
+        collides(snake.elements, x, y)
   		) {
         clear();
   		  mvprintw(0, 0, "GAME OVER\n\n");
@@ -172,4 +174,17 @@ int readInput(void) {
     } else {
         return 0;
     }
+}
+
+int collides(struct Point *snake, int x, int y) {
+  while (snake != NULL) {
+    if(
+      snake->x == x &&
+      snake->y == y
+    ) {
+      return 1;
+    }
+    snake = snake->next;
+  }
+  return 0;
 }
