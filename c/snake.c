@@ -33,6 +33,7 @@ void drawSnake(struct Snake *snake);
 void draw(struct Point *point);
 void drawBoard();
 void redrawAll(struct Snake *snake);
+int readInput(void);
 
 int frame = 0;
 int main(int argc, char *argv[]) {
@@ -41,57 +42,58 @@ int main(int argc, char *argv[]) {
   // ncurses init stuff
   initscr();
   noecho();
+  nodelay(stdscr, TRUE);
   curs_set(FALSE);
 
   snake.length = INITIAL_SNAKE_LENGTH;
   createSnake(&snake);
 
   while(1) {
-    // get the last points coords
-    last(&snake.elements, &x, &y);
+    if (readInput()) {
+      switch(getch()) {
+        case 65: //UP
+          snake.direction = up;
+          break;
+        case 66: // DOWN
+          snake.direction = down;
+          break;
+        case 68: // LEFT
+          snake.direction = left;
+          break;
+        case 67: // RIGHT
+          snake.direction = right;
+          break;
+      }
+    } else {
+      // get the last points coords
+      last(&snake.elements, &x, &y);
 
-    // main loop starts here
-    redrawAll(&snake);
+      // main loop starts here
 
-    switch(snake.direction) {
-      case up:
-        y--;
-				break;
-			case down:
-        y++;
-				break;
-      case left:
-        x--;
-				break;
-      case right:
-        x++;
-				break;
+      switch(snake.direction) {
+        case up:
+          y--;
+  				break;
+  			case down:
+          y++;
+  				break;
+        case left:
+          x--;
+  				break;
+        case right:
+          x++;
+  				break;
+      }
+
+      // add the new elements with modified coords based on the last one
+      push(&snake.elements, x, y);
+
+      // remove the first element
+      shift(&snake.elements, &x, &y);
+
+      redrawAll(&snake);
+      usleep(DELAY);
     }
-
-    // add the new elements with modified coords based on the last one
-    push(&snake.elements, x, y);
-
-    // remove the first element
-    shift(&snake.elements, &x, &y);
-
-    // c = getch();
-    // mvprintw(5, 5, "%d", c);
-		// switch(c) {
-    //   case 65: //UP
-		// 		mvprintw(5, 5, "UP");
-		// 		break;
-		// 	case 66: // DOWN
-		// 		mvprintw(5, 5, "DW");
-		// 		break;
-    //   case 68: // LEFT
-		// 		mvprintw(5, 5, "LF");
-		// 		break;
-    //   case 67: // RIGHT
-		// 		mvprintw(5, 5, "RG");
-		// 		break;
-		// }
-
-    usleep(DELAY);
 	}
 
   endwin();
@@ -143,4 +145,15 @@ void drawBoard() {
       }
     }
   }
+}
+
+int readInput(void) {
+    int ch = getch();
+
+    if (ch != ERR) {
+        ungetch(ch);
+        return 1;
+    } else {
+        return 0;
+    }
 }
