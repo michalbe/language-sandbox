@@ -85,6 +85,18 @@ int main(int argc, char *argv[]) {
   				break;
       }
 
+      // Game over conditions
+      if (
+  			x == -1 ||
+  			x == WIDTH ||
+  			y == -1 ||
+  			y == HEIGHT
+  		) {
+        clear();
+  		  mvprintw(0, 0, "GAME OVER\n\n");
+        refresh();
+  			return 0;
+  		}
       // add the new elements with modified coords based on the last one
       push(&snake.elements, x, y);
 
