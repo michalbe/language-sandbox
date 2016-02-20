@@ -4,7 +4,7 @@
 
 #include "linked-point/linked-point.h"
 
-#define DELAY 30000
+#define DELAY 100000
 
 // Game config
 #define WIDTH 40
@@ -91,7 +91,7 @@ int main(int argc, char *argv[]) {
 		// 		break;
 		// }
 
-    sleep(1);
+    usleep(DELAY);
 	}
 
   endwin();
