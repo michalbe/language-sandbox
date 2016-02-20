@@ -82,56 +82,54 @@ int main(int argc, char *argv[]) {
           break;
       }
     } else {
-      // get the last points coords
+      // get the last point's coords
       last(&snake.elements, &x, &y);
-
-      // main loop starts here
 
       switch(snake.direction) {
         case up:
           y--;
-  				break;
-  			case down:
+          break;
+        case down:
           y++;
-  				break;
+          break;
         case left:
           x--;
-  				break;
+          break;
         case right:
           x++;
-  				break;
+          break;
       }
 
       // Game over conditions
       if (
-  			x == 0 ||
-  			x >= WIDTH ||
-  			y == 0 ||
-  			y >= HEIGHT ||
+        x == 0 ||
+        x >= WIDTH ||
+        y == 0 ||
+        y >= HEIGHT ||
         collides(snake.elements, x, y)
-  		) {
+      ) {
         clear();
-  		  mvprintw(0, 0, "GAME OVER\nSCORE: %d\n\n", score);
+        mvprintw(0, 0, "GAME OVER\nSCORE: %d\n\n", score);
         refresh();
-  			return 0;
-  		}
+        return 0;
+      }
       // add the new elements with modified coords based on the last one
       push(&snake.elements, x, y);
 
       if(
-  			x == food.x &&
-  			y == food.y
-  		) {
+        x == food.x &&
+        y == food.y
+      ) {
         score++;
-  			createFood(&food);
-  		} else {
+        createFood(&food);
+      } else {
         // remove the first element
         shift(&snake.elements, &x, &y);
       }
       redrawAll(&snake, &food);
       usleep(DELAY);
     }
-	}
+  }
 
   endwin();
 }
