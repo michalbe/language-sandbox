@@ -1,7 +1,7 @@
 # C
 
 ## Dependencies
-  - ncurses (https://viget.com/extend/game-programming-in-c-with-the-ncurses-library)
+  - [ncurses](https://viget.com/extend/game-programming-in-c-with-the-ncurses-library)
 
 
 ## How to run?
