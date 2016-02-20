@@ -6,7 +6,7 @@
 
 ## How to run?
 ```
-$ make %% ./snake
+$ make && ./snake
 ```
 
 ## How it looks like?
