@@ -226,9 +226,8 @@ int randRange(int min, int max) {
   /* Create equal size buckets all in a row, then fire randomly towards
    * the buckets until you land in one of them. All buckets are equally
    * likely. If you land off the end of the line of buckets, try again. */
-  do
-  {
-      r = rand();
+  do {
+    r = rand();
   } while (r >= limit);
 
   return min + (r / buckets);

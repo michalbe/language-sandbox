@@ -12,5 +12,5 @@ open `index.html` in the browser
 ## Notes on the language
   - I'm most familiar with JS so there will be no notes here
 
-  
-_05 January 2015_
+
+_05 January 2016_
