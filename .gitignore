@@ -28,3 +28,6 @@ node_modules
 .DS_Store
 snake
 snake.o
+*.command
+internal/
+qb64
