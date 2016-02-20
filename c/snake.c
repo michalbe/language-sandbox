@@ -1,6 +1,8 @@
 #include <ncurses.h>
 #include <unistd.h>
 #include <string.h>
+#include <stdlib.h>
+#include <time.h>
 
 #include "linked-point/linked-point.h"
 
@@ -10,6 +12,7 @@
 #define WIDTH 40
 #define HEIGHT 20
 #define PIXEL "#"
+#define FOOD_PIXEL "@"
 
 #define INITIAL_SNAKE_LENGTH 5
 #define INITIAL_SNAKE_MARGIN 2
@@ -32,22 +35,31 @@ void createSnake(struct Snake *snake);
 void drawSnake(struct Snake *snake);
 void draw(struct Point *point);
 void drawBoard();
-void redrawAll(struct Snake *snake);
+void redrawAll(struct Snake *snake, struct Point *food);
 int readInput(void);
 int collides(struct Point *snake, int x, int y);
+int randRange(int min, int max);
+void createFood(struct Point *food);
+void drawFood(struct Point *food);
 
 int frame = 0;
 int main(int argc, char *argv[]) {
   struct Snake snake;
+  struct Point food;
   int c, x, y;
+
+
   // ncurses init stuff
   initscr();
   noecho();
   nodelay(stdscr, TRUE);
   curs_set(FALSE);
 
+  srand(time(NULL));
+
   snake.length = INITIAL_SNAKE_LENGTH;
   createSnake(&snake);
+  createFood(&food);
 
   while(1) {
     if (readInput()) {
@@ -109,7 +121,7 @@ int main(int argc, char *argv[]) {
       // remove the first element
       shift(&snake.elements, &x, &y);
 
-      redrawAll(&snake);
+      redrawAll(&snake, &food);
       usleep(DELAY);
     }
 	}
@@ -140,10 +152,11 @@ void draw(struct Point *point) {
   mvprintw(point->y, point->x, PIXEL);
 }
 
-void redrawAll(struct Snake *snake) {
+void redrawAll(struct Snake *snake, struct Point *food) {
   clear();
   drawBoard();
   drawSnake(snake);
+  drawFood(food);
   mvprintw(20, 3, "%d", frame);
   refresh();
 
@@ -187,4 +200,31 @@ int collides(struct Point *snake, int x, int y) {
     snake = snake->next;
   }
   return 0;
+}
+
+void createFood(struct Point *food) {
+  food->x = randRange(1, WIDTH-1);
+  food->y = randRange(1, HEIGHT-1);
+}
+
+void drawFood(struct Point *food) {
+  mvprintw(food->y, food->x, FOOD_PIXEL);
+}
+
+int randRange(int min, int max) {
+  rand();
+  int r;
+  const int range = 1 + max - min;
+  const int buckets = RAND_MAX / range;
+  const int limit = buckets * range;
+
+  /* Create equal size buckets all in a row, then fire randomly towards
+   * the buckets until you land in one of them. All buckets are equally
+   * likely. If you land off the end of the line of buckets, try again. */
+  do
+  {
+      r = rand();
+  } while (r >= limit);
+
+  return min + (r / buckets);
 }
