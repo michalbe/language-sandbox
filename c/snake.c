@@ -42,7 +42,7 @@ int randRange(int min, int max);
 void createFood(struct Point *food);
 void drawFood(struct Point *food);
 
-int frame = 0;
+int score = 0;
 int main(int argc, char *argv[]) {
   struct Snake snake;
   struct Point food;
@@ -105,13 +105,13 @@ int main(int argc, char *argv[]) {
       // Game over conditions
       if (
   			x == 0 ||
-  			x == WIDTH ||
+  			x >= WIDTH ||
   			y == 0 ||
-  			y == HEIGHT ||
+  			y >= HEIGHT ||
         collides(snake.elements, x, y)
   		) {
         clear();
-  		  mvprintw(0, 0, "GAME OVER\n\n");
+  		  mvprintw(0, 0, "GAME OVER\nSCORE: %d\n\n", score);
         refresh();
   			return 0;
   		}
@@ -122,6 +122,7 @@ int main(int argc, char *argv[]) {
   			x == food.x &&
   			y == food.y
   		) {
+        score++;
   			createFood(&food);
   		} else {
         // remove the first element
@@ -163,10 +164,8 @@ void redrawAll(struct Snake *snake, struct Point *food) {
   drawBoard();
   drawSnake(snake);
   drawFood(food);
-  mvprintw(20, 3, "%d", frame);
+  mvprintw(20, 3, "SCORE: %d", score);
   refresh();
-
-  frame++;
 }
 
 void drawBoard() {
@@ -209,8 +208,8 @@ int collides(struct Point *snake, int x, int y) {
 }
 
 void createFood(struct Point *food) {
-  food->x = randRange(1, WIDTH-1);
-  food->y = randRange(1, HEIGHT-1);
+  food->x = randRange(1, WIDTH-2);
+  food->y = randRange(1, HEIGHT-2);
 }
 
 void drawFood(struct Point *food) {
