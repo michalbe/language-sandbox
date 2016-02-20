@@ -52,16 +52,20 @@ int main(int argc, char *argv[]) {
     if (readInput()) {
       switch(getch()) {
         case 65: //UP
-          snake.direction = up;
+          if (snake.direction != down)
+            snake.direction = up;
           break;
         case 66: // DOWN
-          snake.direction = down;
+          if (snake.direction != up)
+            snake.direction = down;
           break;
         case 68: // LEFT
-          snake.direction = left;
+          if (snake.direction != right)
+            snake.direction = left;
           break;
         case 67: // RIGHT
-          snake.direction = right;
+          if (snake.direction != left)
+            snake.direction = right;
           break;
       }
     } else {
